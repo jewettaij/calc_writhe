@@ -22,15 +22,18 @@ This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
 double-integral in a straightforward way.
 
-For larger curves, this code would need to be rewritten to approximate or
-merging contributions from points that are far away.
-
 *(The double-for-loop that calculates the writhe is located in this
- [header file](src/calc_writhe.hpp)
+ [header file](src/calc_writhe.hpp).
  The CalcWrithe() template function works with any C/C++ container
  which supports [i][j] indexing.
- For short curves, it's probably easier to write a double-for-loop using python
- and with numpy and pyomp, the code might even run as quickly as this code.)*
+ For short curves, it's easier to write a double-for-loop using python.)*
+
+For larger curves, this code should probably be rewritten.
+(For most non-pathological curves, it should be possible to merge
+ contributions from many points *j,j+1,j+2...* that are sufficiently
+ far away from *i* that their individual contributions are low.)
+
+
 
 ## Example usage
 
