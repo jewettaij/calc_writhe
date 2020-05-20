@@ -1,0 +1,6 @@
+# compiled binaries
+*.so *.o
+calc_writhe
+
+# text-editor temporary files:
+*~
