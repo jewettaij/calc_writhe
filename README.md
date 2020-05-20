@@ -40,11 +40,14 @@ merging contributions from points that are far away.
 
 ### Progress updates (experimental)
 
-If the curve is large, you can display progress-updates using:
+If the curve contains many points, calculating the double-sum can be slow.
+You can monitor progress of the sum this way:
 ```
    calc_writhe -progress 10 < curve_coordinaes.raw
 ```
-*(WARNING: I was too lazy to separate the output from different processors,
+This will cause the program to print progress updates every 10 seconds.
+*(However the results may be difficult to understand.
+  I was too lazy to separate the output from different processors,
        so unless you compiled the serial version, expect to see multiple
        conflicting number.  The progress can be estimated by taking the lowest
        of these numbers, multiplying it by the number of processors, 
