@@ -1,6 +1,6 @@
 [![C++11](https://img.shields.io/badge/C%2B%2B-11-blue.svg)](https://isocpp.org/std/the-standard)
 [![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/jewettaij/calc_writhe)]()
-[![License: CC0-1.0](https://licensebuttons.net/p/mark/1.0/88x31.png)](https://creativecommons.org/publicdomain/zero/1.0/)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)]()
 
 
 calc_writhe
@@ -14,8 +14,6 @@ and calculates its [writhe](https://en.wikipedia.org/wiki/Writhe)
 using a discretized version of the Gauss
 [linking number integral](https://en.wikipedia.org/wiki/Writhe#Writhe_of_a_closed_curve).
 ![linking number integral](https://wikimedia.org/api/rest_v1/media/math/render/svg/c38baa2103b96fdb9d91d508e8c4d179f4773881)
-Multiprocessor support is implemented using
- [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
 
 The file should be in 3-column ASCII format (whitespace delimited).
 Points in the curve need not be equally spaced (although this is reccommended).
@@ -23,18 +21,18 @@ Points in the curve need not be equally spaced (although this is reccommended).
 This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
 double-integral in a straightforward way.
-
-*(The double-for-loop that calculates the writhe is located in this
- [header file](src/calc_writhe.hpp).
- The CalcWrithe() template function works with any C/C++ container
- which supports [i][j] indexing.
- For short curves, it's easier to write a double-for-loop using python.)*
+Multiprocessor support is implemented using
+[OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
 
 For larger curves, this code should probably be rewritten.
 (For most non-pathological curves, it should be possible to merge
  contributions from many points *j,j+1,j+2...* that are sufficiently
  far away from *i* that their individual contributions are low.)
 
+*(The double-for-loop that calculates the writhe is located in this
+ [header file](src/calc_writhe.hpp).
+ The CalcWrithe() template function can accept coordinates in 
+ any C/C++ array-like container which supports [i][j] indexing.)*
 
 
 ## Example usage
@@ -46,7 +44,7 @@ For larger curves, this code should probably be rewritten.
 ### Progress updates (experimental)
 
 If the curve contains many points, calculating the double-sum can be slow.
-You can monitor progress of the sum this way:
+You can monitor the summation progress this way:
 ```
    calc_writhe -progress 10 < curve_coordinaes.raw
 ```
