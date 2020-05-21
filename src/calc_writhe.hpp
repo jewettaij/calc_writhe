@@ -97,17 +97,17 @@ T CalcWrithe(long N,
 
   //T *L_i = new T[N]; // the length of the ith line segment  NOT_NEEDED
   T **R_i;  // the position of the center (midpoint) of the ith line segment
-  T **V_i;  // the normalized direction of the ith line segment (curve tangent)
+  T **dR_i;  // the difference in positions between the ends of the line segment
 
   Alloc2D(N, 3, &R_i);
-  Alloc2D(N, 3, &V_i);
+  Alloc2D(N, 3, &dR_i);
   for (long i = 0; i < N; i++) {
     long ip1 = i+1;
     if (ip1 >= N)
       ip1 -= N;
     for (int d=0; d < 3; d++) {
       R_i[i][d] = 0.5*(curve[i][d] + curve[ip1][d]);
-      V_i[i][d] = (curve[ip1][d] - curve[i][d]);
+      dR_i[i][d] = (curve[ip1][d] - curve[i][d]);
     }    
     T delta[3];
     T sum = 0.0;
@@ -115,8 +115,6 @@ T CalcWrithe(long N,
       T delta = curve[ip1][d] - curve[i][d];
       sum += delta*delta;
     }
-    //L_i[i] = sqrt(sum);   // NOT_NEEDED
-    //V_i[i][d] /= L_i[i];  // NOT_NEEDED
   } //for (long i = 0; i <= N; i++)
 
 
@@ -126,14 +124,18 @@ T CalcWrithe(long N,
 
   #pragma omp parallel
   {
+
     // The following variables are private for each processor
     auto time_prev = std::chrono::high_resolution_clock::now();
 
     T sum_local;
     T rij[3];
+
     #pragma omp for collapse(1)
     for (long i = 0; i < N; i++) {
+
       sum_local = 0.0;
+
       for (long j = i+1; j < N; j++) {
         T lij = 0.0;
         for (int d=0; d < 3; d++) {
@@ -144,7 +146,7 @@ T CalcWrithe(long N,
         lij = sqrt(lij);
         lij3 *= lij;   // now lij3 = |rij|^3
 
-        T delta_sum = TripleProduct<T, T const*> (V_i[j], V_i[i], rij);
+        T delta_sum = TripleProduct<T, T const*> (dR_i[j], dR_i[i], rij);
 
         delta_sum /= lij3;
         sum_local += delta_sum;
@@ -164,16 +166,15 @@ T CalcWrithe(long N,
 
       #pragma omp critical
       {
-        sum += sum_local;
+        sum += sum_local; //add contribtions from each processor to total sum
       }
 
     } //for (long i = 0; i <= N; i++)
   } //#pragma omp parallel
 
-  // Now clean up the mess we made at the beginning
+  // Now clean up the memory we allocated earlier.
   Dealloc2D(&R_i);
-  Dealloc2D(&V_i);
-  //delete [] L_i;  L_i not needed
+  Dealloc2D(&dR_i);
 
   return 2.0 * sum / (4.0*M_PI);
 }
