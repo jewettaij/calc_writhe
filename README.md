@@ -75,8 +75,9 @@ however it is a very simple program (with two nested for-loops).
 file containing the coordinates.)
 
 Further improvements to numeric accuracy are possible by
-1) Using a higher-order integrator (ie.a 2nd-order Runge-Kutta-like integrator).
-2) Using arbitrary-precision accumulator.
+1) Using a higher-order integrator
+(eg. a 2nd-order Runge-Kutta-like integrator.)
+2) Using an arbitrary-precision accumulator.
 
 
 ## Requirements

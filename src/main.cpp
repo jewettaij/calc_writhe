@@ -48,7 +48,7 @@ main(int argc, char **argv)
       long i=1;
       while (i < argc)
       {
-        int ndelete = 1;
+        int ndelete = 0;
         if (strcmp(argv[i], "-open")==0)
         {
           throw InputErr("Error: This program does not yet support automatic closure of open curves.");

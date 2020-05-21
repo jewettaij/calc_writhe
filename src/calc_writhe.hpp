@@ -91,7 +91,7 @@ void Normalize(Vect dest, ConstVect source) {
 template<typename T, typename CoordArray>
 T CalcWrithe(long N,
              CoordArray curve,
-             bool report_progress=false)
+             double report_progress = 0)
 {
   // First, precompute each line segment's length, midpoint, and direction.
 
@@ -127,7 +127,8 @@ T CalcWrithe(long N,
   #pragma omp parallel
   {
     // The following variables are private for each processor
-    auto time_prev = std::chrono::system_clock::now();
+    auto time_prev = std::chrono::high_resolution_clock::now();
+
     T sum_local;
     T rij[3];
     #pragma omp for collapse(1)
@@ -151,9 +152,11 @@ T CalcWrithe(long N,
       } //for (long j = 0; j <= N; j++)
 
       if (report_progress > 0) {
-        auto time = std::chrono::system_clock::now();
-        auto ellapsed_time = time - time_prev;
-        if (ellapsed_time.count() > report_progress) {
+        auto time = std::chrono::high_resolution_clock::now();
+        typedef std::chrono::duration<double> Seconds;
+        Seconds ellapsed_time = time - time_prev;
+        double ellapsed_seconds = ellapsed_time.count();
+        if (ellapsed_seconds > report_progress) {
           cerr << "  (progress: " << i << "/" << N << ")" << endl;
           time_prev = time;
         }
