@@ -85,4 +85,4 @@ A C++11 compatible compiler.
 
 ## License
 
-*calc_writhe* is available under the terms of the [MIT](LICENSE.md).
+*calc_writhe* is available under the terms of the [MIT](LICENSE.md) license.
