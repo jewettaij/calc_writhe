@@ -14,6 +14,8 @@ and calculates its [writhe](https://en.wikipedia.org/wiki/Writhe)
 using a discretized version of the Gauss
 [linking number integral](https://en.wikipedia.org/wiki/Writhe#Writhe_of_a_closed_curve).
 ![linking number integral](https://wikimedia.org/api/rest_v1/media/math/render/svg/c38baa2103b96fdb9d91d508e8c4d179f4773881)
+Multiprocessor support is implemented using
+ [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
 
 The file should be in 3-column ASCII format (whitespace delimited).
 Points in the curve need not be equally spaced (although this is reccommended).
