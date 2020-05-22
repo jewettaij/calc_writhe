@@ -21,7 +21,7 @@ Points in the curve need not be equally spaced (although this is reccommended).
 This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
 double-integral in a straightforward way.
-*(O(n^2).  Optimization strategies to reduce computation time are discussed below.)
+*(O(n^2))*.  Optimization strategies to reduce computation time are discussed below.)
 Multiprocessor support is implemented using
 [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
 
