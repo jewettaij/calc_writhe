@@ -20,14 +20,13 @@ Points in the curve need not be equally spaced (although this is reccommended).
 
 This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
-double-integral in a straightforward way.
+double-integral in a straightforward way. (*O(n^2)*)
 Multiprocessor support is implemented using
 [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
-
-For larger curves, this code should probably be rewritten.
-(For most non-pathological curves, it should be possible to merge
- contributions from many points *j,j+1,j+2...* that are sufficiently
- far away from *i* that their individual contributions are low.)
+*(For larger curves, this code should probably be rewritten.
+ For most non-pathological curves, it should be possible to merge
+ contributions from many points j,j+1,j+2... that are sufficiently
+ far away from i that their individual contributions are low.)*
 
 *(The double-for-loop that calculates the writhe is located in this
  [header file](src/calc_writhe.hpp).
