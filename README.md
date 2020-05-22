@@ -20,19 +20,15 @@ Points in the curve need not be equally spaced (although this is reccommended).
 
 This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
-double-integral in a straightforward way. (*O(n^2)*)
+double-integral in a straightforward way.
+*(O(n^2).  Optimization strategies to reduce computation time are discussed below.)
 Multiprocessor support is implemented using
 [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
-*(For larger curves, this code should probably be rewritten.
- For most non-pathological curves, it should be possible to merge
- contributions from many points j,j+1,j+2... that are sufficiently
- far away from i that their individual contributions are low.)*
 
 *(The double-for-loop that calculates the writhe is located in this
  [header file](src/calc_writhe.hpp).
  The CalcWrithe() template function can accept coordinates in 
  any C/C++ array-like container which supports [i][j] indexing.)*
-
 
 ## Example usage
 
@@ -55,7 +51,7 @@ This will cause the program to print progress updates every 10 seconds.
        of these numbers, multiplying it by the number of processors, 
        and dividing it by the length of the curve.
        This is easy to fix, but I don't want to spend time on it.
-       -Andrew 2020-5-20)*
+       -Andrew 2020-5-22)*
 
 ## Compilation
 
@@ -68,16 +64,24 @@ This will cause the program to print progress updates every 10 seconds.
 
 ## Development Status: *alpha*
 
-As of 2020-5-19, **calc_writhe** has not been tested extensively,
+As of 2020-5-22, **calc_writhe** has not been tested extensively,
 however it is a very simple program (with two nested for-loops).
 (If there are bugs, they are probably in the code that reads the text
 file containing the coordinates.)
 
-Further improvements to numeric accuracy are possible by
-1) Using a higher-order integrator
-(eg. a 2nd-order Runge-Kutta-like integrator.)
-2) Using an arbitrary-precision accumulator.
+### Possible future improvements:
 
+1) Use a higher-order integrator to improve accuracy
+(ie. a 2nd-order Runge-Kutta-like integrator).
+2) Use an arbitrary-precision accumulator.
+3) To reduce computation time, one could merge contributions from many points
+along the curve *(j,j+1,j+2,...)* when their partner *(i)* is physically far away.
+4) Conversely, when the distance between *i* and *j* is low, automatically
+subdivide the curve using interpolation to improve accuracy.
+5) For curves which are not closed, automatically attempt to close them
+(eg. at infinity) beforehand.
+
+I have no plans to implement any of these features. -A 2020-5-22
 
 ## Requirements
 
