@@ -56,13 +56,13 @@ This will cause the program to print progress updates every 10 seconds.
 ### Suggestions for numerical stability
 
 The writhe is challenging to calculate.
-It can be very sensitive to numerical integration error,
-(ie due to the finite distance between points on the curve).
+It can be very sensitive to numerical integration error
+(due to the finite distance between points on the curve).
 Small changes in the curve which may not be visually obvious
 can also have a large effect on the outcome.
 
 To minimize this, the distance between consecutive points on the curve
-should be smaller than the distance between all other pairs of points on
+should be smaller than the distance between other pairs of points on
 the curve (and preferably uniform throughout the curve).
 Smoothing or interpolating the curve beforehand can help.
 (If it helps, a simple command line interpolation tool is available
