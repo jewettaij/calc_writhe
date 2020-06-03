@@ -146,7 +146,7 @@ T CalcWrithe(long N,
         lij = sqrt(lij);
         lij3 *= lij;   // now lij3 = |rij|^3
 
-        T delta_sum = TripleProduct<T, T const*> (dR_i[j], dR_i[i], rij);
+        T delta_sum = TripleProduct<T, T const*> (dR_i[i], dR_i[j], rij);
 
         delta_sum /= lij3;
         sum_local += delta_sum;

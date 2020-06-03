@@ -18,8 +18,8 @@ using namespace calc_writhe;
 
 // global variables
 const char g_program_name[]   = "calc_writhe";
-const char g_version_string[] = "0.0.1";
-const char g_date_string[]    = "<2020-5-22>";
+const char g_version_string[] = "0.1.0";
+const char g_date_string[]    = "<2020-6-03>";
 const char *g_spaces = " \t"; // whitespace characters (exluding newlines)
 const char *g_spaces_and_newlines = " \t\n";
 

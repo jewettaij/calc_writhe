@@ -9,7 +9,7 @@ calc_writhe
 ## Description
 
 This program is a small utility which reads a file containing the
-coordinates of a closed curve in 3 dimensions (from the standard input),
+coordinates of a *closed* curve in 3 dimensions (from the standard input),
 and calculates its [writhe](https://en.wikipedia.org/wiki/Writhe)
 using a discretized version of the Gauss
 [linking number integral](https://en.wikipedia.org/wiki/Writhe#Writhe_of_a_closed_curve).
@@ -53,6 +53,30 @@ This will cause the program to print progress updates every 10 seconds.
        This is easy to fix, but I don't want to spend time on it.
        -Andrew 2020-5-22)*
 
+### Suggestions for numerical stability
+
+The writhe is challenging to calculate.
+It can be very sensitive to numerical integration error,
+(ie due to the finite distance between points on the curve).
+Small changes in the curve which may not be visually obvious
+can also have a large effect on the outcome.
+
+To minimize this, the distance between consecutive points on the curve
+should be smaller than the distance between all other pairs of points on
+the curve (and preferably uniform throughout the curve).
+Smoothing or interpolating the curve beforehand can help.
+(If it helps, a simple command line interpolation tool is available
+[here](https://github.com/jewettaij/moltemplate/blob/master/moltemplate/interpolate_curve.py),
+with documentation
+[here](https://github.com/jewettaij/moltemplate/blob/master/doc/doc_interpolate_curve.md).)
+
+#### *Not for use on open curves*
+
+You must make sure the curve is closed.
+If not (ie. if the two ends the curve are not nearby),
+then the resulting writhe estimate will be numerically
+unstable and can vary by orders of magnitude.
+
 ## Compilation
 
 ```
@@ -81,7 +105,8 @@ subdivide the curve using interpolation to improve accuracy.
 5) For curves which are not closed, automatically attempt to close them in
 a reasonable way beforehand.  (Currently *calc_writhe* closes the two ends
 directly with a single line segment, regardless of the distance between them,
-or the proximity of this line segment to other parts of the curve.)
+or the proximity of this line segment to other parts of the curve.
+This will usually cause numeric instability.)
 
 I have no plans to implement any of these features. -A 2020-5-22
 
