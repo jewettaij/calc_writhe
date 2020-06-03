@@ -1,9 +1,9 @@
-/// @file     writhe.hpp
+/// @file     calc_writhe.hpp
 /// @brief    Calculate the writhe of a curve using a discretized version
 ///           of Gauss' linking number integral.
 ///           (https://en.wikipedia.org/wiki/Writhe)
 /// @author   Andrew Jewett
-/// @license  CC0-1.0
+/// @license  MIT
 
 #ifndef _CALC_WRITHE_HPP
 #define _CALC_WRITHE_HPP

@@ -33,7 +33,7 @@ Multiprocessor support is implemented using
 ## Example usage
 
 ```
-   calc_writhe < curve_coordinaes.raw
+   calc_writhe < curve_coordinates.raw
 ```
 
 ### Progress updates (experimental)
@@ -41,7 +41,7 @@ Multiprocessor support is implemented using
 If the curve contains many points, calculating the double-sum can be slow.
 You can monitor the summation progress this way:
 ```
-   calc_writhe -progress 10 < curve_coordinaes.raw
+   calc_writhe -progress 10 < curve_coordinates.raw
 ```
 This will cause the program to print progress updates every 10 seconds.
 *(However the results may be difficult to understand.
@@ -78,8 +78,10 @@ file containing the coordinates.)
 along the curve *(j,j+1,j+2,...)* when their partner *(i)* is physically far away.
 4) Conversely, when the distance between *i* and *j* is low, automatically
 subdivide the curve using interpolation to improve accuracy.
-5) For curves which are not closed, automatically attempt to close them
-(eg. at infinity) beforehand.
+5) For curves which are not closed, automatically attempt to close them in
+a reasonable way beforehand.  (Currently *calc_writhe* closes the two ends
+directly with a single line segment, regardless of the distance between them,
+or the proximity of this line segment to other parts of the curve.)
 
 I have no plans to implement any of these features. -A 2020-5-22
 
