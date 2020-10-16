@@ -15,6 +15,10 @@ using namespace std;
 
 using namespace calc_writhe;
 
+#ifndef DISABLE_OPENMP
+#include <omp.h>       // (OpenMP-specific)
+#endif
+
 
 // global variables
 const char g_program_name[]   = "calc_writhe";
@@ -64,6 +68,27 @@ main(int argc, char **argv)
             throw InputErr(err_msg.str().c_str());
           }
           report_progress = stof(argv[i+1]);
+          ndelete = 2;
+        }
+        else if (strcmp(argv[i], "-np")==0) {
+          #ifdef DISABLE_OPENMP
+          throw InputErr("Error: The " + std::string(argv[i]) + 
+                         " argument is only available if program was compiled\n"
+                         " with support for OpenMP (multiprocessor support).\n");
+          #else
+          try {
+            if ((i+1 >= argc) ||
+                (argv[i+1] == "") || (argv[i+1][0] == '-'))
+              throw invalid_argument("");
+            int num_threads = stoi(argv[i+1]);
+            omp_set_num_threads(num_threads);
+          }
+          catch (invalid_argument& exc) {
+            throw InputErr("Error: The " + std::string(argv[i]) + 
+                           " argument must be followed by a positive integer, the\n"
+                           "       number of threads (processors) requested.\n");
+          }
+          #endif //#ifdef DISABLE_OPENMP
           ndelete = 2;
         }
         if (ndelete > 0) { // if the argument was recogized

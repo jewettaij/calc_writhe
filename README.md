@@ -35,8 +35,15 @@ Multiprocessor support is implemented using
 ```
    calc_writhe < curve_coordinates.raw
 ```
+## Optional command -line arguments
 
-### Progress updates (experimental)
+### *-np Np*
+
+By default, calc_writhe uses all of the available processors (threads)
+on your computer.  Use this argument to limit the number of cores
+(threads) to *Np*.
+
+### *-progress Nsec*
 
 If the curve contains many points, calculating the double-sum can be slow.
 You can monitor the summation progress this way:
