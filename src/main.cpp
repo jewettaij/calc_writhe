@@ -119,9 +119,6 @@ main(int argc, char **argv)
       prev_line = g_line;
     }
 
-    //Now print the corrlation function to the standard out
-    //assert(L <= vCsum.size());
-
     long N = vvX_id.size();
 
     double writhe =

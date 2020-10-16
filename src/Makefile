@@ -55,7 +55,7 @@ clean:
 
 distclean:
 	$(MAKE) clean
-	rm -f $(INSTALL_PATH)/ndmansfield
+	rm -f $(INSTALL_PATH)/calc_writhe
 
 depend:
 	mv Makefile Makefile.tmp
