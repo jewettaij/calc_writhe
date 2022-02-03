@@ -6,6 +6,9 @@
 calc_writhe
 ===========
 
+<img src="./test_files/circle_x2_writhe=1_n=100_R=219.png" height=150>
+
+
 ## Description
 
 This program is a small utility which reads a file containing the
@@ -16,12 +19,14 @@ using a discretized version of the Gauss
 ![linking number integral](https://wikimedia.org/api/rest_v1/media/math/render/svg/c38baa2103b96fdb9d91d508e8c4d179f4773881)
 
 The file should be in 3-column ASCII format (whitespace delimited).
-Points in the curve need not be equally spaced (although this is reccommended).
+Points in the curve need not be exactly equally spaced
+(although it is reccommended that there are no large gaps along the curve).
 
 This code was designed to calculate the writhe of moderately large curves
 containing 10^5-10^6 points, and it does so by computing the discretized
 double-integral in a straightforward way.
-*(O(n^2))*.  Optimization strategies to reduce computation time are discussed below.)
+*(Complexity: O(n^2)).
+Optimization strategies to reduce computation time are discussed below.)*
 Multiprocessor support is implemented using
 [OpenMP.](https://en.wikipedia.org/wiki/OpenMP)
 
@@ -30,11 +35,14 @@ Multiprocessor support is implemented using
  The CalcWrithe() template function can accept coordinates in 
  any C/C++ array-like container which supports [i][j] indexing.)*
 
+
 ## Example usage
 
 ```
    calc_writhe < curve_coordinates.raw
 ```
+
+
 ## Optional command -line arguments
 
 ### *-np Np*
@@ -42,6 +50,7 @@ Multiprocessor support is implemented using
 By default, calc_writhe uses all of the available processors (threads)
 on your computer.  Use this argument to limit the number of cores
 (threads) to *Np*.
+
 
 ### *-progress Nsec*
 
@@ -60,6 +69,7 @@ This will cause the program to print progress updates every 10 seconds.
        This is easy to fix, but I don't want to spend time on it.
        -Andrew 2020-5-22)*
 
+
 ### Suggestions for numerical stability
 
 The writhe is challenging to calculate.
@@ -70,12 +80,13 @@ can also have a large effect on the outcome.
 
 To minimize this, the distance between consecutive points on the curve
 should be smaller than the distance between other pairs of points on
-the curve (and preferably uniform throughout the curve).
+the curve (and preferably reasonably uniform throughout the curve).
 Smoothing or interpolating the curve beforehand can help.
 (If it helps, a simple command line interpolation tool is available
 [here](https://github.com/jewettaij/moltemplate/blob/master/moltemplate/interpolate_curve.py),
 with documentation
 [here](https://github.com/jewettaij/moltemplate/blob/master/doc/doc_interpolate_curve.md).)
+
 
 #### *Not for use on open curves*
 
@@ -83,6 +94,7 @@ You must make sure the curve is closed.
 If not (ie. if the two ends the curve are not nearby),
 then the resulting writhe estimate will be numerically
 unstable and can vary by orders of magnitude.
+
 
 ## Compilation
 
@@ -93,12 +105,14 @@ unstable and can vary by orders of magnitude.
    make
 ```
 
+
 ## Development Status: *alpha*
 
 As of 2020-5-22, **calc_writhe** has not been tested extensively,
 however it is a very simple program (with two nested for-loops).
 (If there are bugs, they are probably in the code that reads the text
 file containing the coordinates.)
+
 
 ### Possible future improvements:
 
@@ -116,6 +130,7 @@ or the proximity of this line segment to other parts of the curve.
 This will usually cause numeric instability.)
 
 I have no plans to implement any of these features. -A 2020-5-22
+
 
 ## Requirements
 
